@@ -7,6 +7,30 @@ const fileHound = require('fileHound');
 
 
  //función que tiene las opciones
+const mdLinks = (path, option) =>{ 
+  return new Promise((resolve, reject)=>{
+    fs.stat(path, (error, stats) => {
+      if (error){
+        console.log("error")
+      }
+      if(stats.isFile()){
+        readFile(path)
+        .then()//no se que meter ahí
+      }//else no lleva doc 
+      else if(stats.isDirectory()){
+        file()
+        .then(res =>{
+          res.forEach(links =>{
+            resolve(ReadFile(links))
+          })
+        })
+        .catch (err =>{
+          reject(err)
+        })
+      }
+    }) 
+  })
+
 
 
 const readFile = (path)=>{
@@ -47,6 +71,6 @@ const readFile = (path)=>{
     .find()
     .then ( files=>{
       files.forEach(file => {
-        console.log()
+        console.log(file)
       });
     })
