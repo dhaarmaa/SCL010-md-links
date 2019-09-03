@@ -7,25 +7,7 @@ const fileHound = require('fileHound');
 
 
  //función que tiene las opciones
-// const mdLinks = (path, validate) => {
-//   return new Promise((resolve, reject) => {
-//     if(validate && validate.validate){
-//       readFile(path)
-//         .then(links => {
-//           validateLinks(links)
-//             .then(validatedLinks => {
-//               resolve(validatedLinks)
-//             })
-//         }) 
-//     }
-//     else {
-//       readFile(path)
-//         .then(links => {
-//           resolve(links);
-//         })
-//     }
-  })
-}
+
 
 const readFile = (path)=>{
   return new Promise ((resolve, reject) =>{ //creo promesa
@@ -60,7 +42,7 @@ const readFile = (path)=>{
 }
 //Flexible and fluent interface for searching the file system
  const file = filehound.create() 
-    .paths(path)
+    .paths(valueArgv)
     .ext('md')
     .find()
     .then ( files=>{
