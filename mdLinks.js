@@ -4,6 +4,7 @@ const fs= require('fs');
 const marked= require('marked');
 const path = require('path');
 const fileHound = require('fileHound');
+const chalk = require('chalk');
 
 
  //función que tiene las opciones
@@ -18,7 +19,7 @@ const mdLinks = (path, option) =>{
         .then()//no se que meter ahí
       }//else no lleva doc 
       else if(stats.isDirectory()){
-        file()
+        readdir()
         .then(res =>{
           res.forEach(links =>{
             resolve(ReadFile(links))
@@ -30,9 +31,9 @@ const mdLinks = (path, option) =>{
       }
     }) 
   })
+}
 
-
-
+//f(x) que lee archivos
 const readFile = (path)=>{
   return new Promise ((resolve, reject) =>{ //creo promesa
     let links= [];//array en donde se van alamacenar los docuemntos
@@ -65,12 +66,12 @@ const readFile = (path)=>{
   })
 }
 //Flexible and fluent interface for searching the file system
- const file = filehound.create() 
-    .paths(valueArgv)
-    .ext('md')
-    .find()
-    .then ( files=>{
-      files.forEach(file => {
-        console.log(file)
-      });
-    })
+//F(x) que lee directorios y saca los archivos de formato md
+const readdir = (valueArgv) => {
+  return  fileHound.create()
+  .paths(valueArgv)
+  .ext('md')
+  .find();
+} 
+
+
