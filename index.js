@@ -1,10 +1,10 @@
 // validacionescatch
-const mdLinks = require('mdLinsk');
+const mdLinks = require('./mdLinks').mdLinks;
 const path = require('path');
 const chalk = require('chalk');
 
 let valueArgv = process.argv[2]
-    if(!Path.isAbsolute(valueArgv)){
+    if(!path.isAbsolute(valueArgv)){
         valueArgv =(path.resolve(valueArgv))
     }
     if(process.argv[3] === 'validate' && process.argv[4] === 'stats' ||  process.argv[3] === 'stats' && process.argv[4] === 'validate') {
@@ -23,7 +23,8 @@ let valueArgv = process.argv[2]
     if (process.argv[3] === 'stats'){
       mdLinks(process.argv[2])
       .then ( links => {
-        let links = mdLinks.linkStast(links);
+        let linksResult = mdLinks.linkStast(links);
+        console.log(linksResult);
         console.log('Resultado:')
         console.log('unique: ');
         console.log('Total: ')

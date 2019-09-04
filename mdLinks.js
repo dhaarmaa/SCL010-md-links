@@ -1,22 +1,28 @@
 //funcion de mdLinks
-const mdLinks = require('mdLinks');
 const fs= require('fs');
 const marked= require('marked');
-const path = require('path');
-const fileHound = require('fileHound');
+const fileHound = require('filehound');
 const chalk = require('chalk');
 
 
  //función que tiene las opciones
-const mdLinks = (path, option) =>{ 
+const mdLinks = (userPath, option) =>{ 
+  console.log("ESTOY AQUI");
+  console.log(userPath);
+
   return new Promise((resolve, reject)=>{
-    fs.stat(path, (error, stats) => {
+    fs.stat(userPath, (error, stats) => {
       if (error){
         console.log("error")
       }
       if(stats.isFile()){
-        readFile(path)
-        .then()//no se que meter ahí
+        readFile(userPath)
+        .then(res => {
+          // por ejemplo...
+          res.forEach(link => {
+            console.log(link);
+          });
+        })//no se que meter ahí
       }//else no lleva doc 
       else if(stats.isDirectory()){
         readdir()
@@ -34,10 +40,11 @@ const mdLinks = (path, option) =>{
 }
 
 //f(x) que lee archivos
-const readFile = (path)=>{
+const readFile = (userPath)=>{
+  console.log("USERPATH READFILE:", userPath);
   return new Promise ((resolve, reject) =>{ //creo promesa
     let links= [];//array en donde se van alamacenar los docuemntos
-    fs.readFile(path, 'utf8', (err, data)=>{ //parametros
+    fs.readFile(userPath, 'utf8', (err, data)=>{ //parametros
       if(err){
     throw err
       }
@@ -47,19 +54,9 @@ const readFile = (path)=>{
           links.push({
             href:href,
             text:text,
-            file:path
+            file:userPath
           });
         };
-        marked(data, {renderer:renderer})
-        const renderer = new  marked.Renderer();//new es para crear un nueva instancia
-        renderer.link= function(href, title, text){
-          links.push({
-            href:href,
-            text:text,
-            file:path
-          });
-        };
-        marked(data, {renderer:renderer})
         resolve(links);
       };
     })
@@ -74,4 +71,7 @@ const readdir = (valueArgv) => {
   .find();
 } 
 
+module.exports = {
+  mdLinks
+}
 
