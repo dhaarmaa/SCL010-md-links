@@ -3,12 +3,15 @@ const mdLinks = require('./mdLinks').mdLinks;
 const path = require('path');
 const chalk = require('chalk');
 
+let option1 = process.argv[3];
+let option2 = process.argv[4];
 let valueArgv = process.argv[2]
     if(!path.isAbsolute(valueArgv)){
         valueArgv =(path.resolve(valueArgv))
     }
-    if(process.argv[3] === 'validate' && process.argv[4] === 'stats' ||  process.argv[3] === 'stats' && process.argv[4] === 'validate') {
-        mdLinks(process.argv[2])
+    
+    if(option1 === 'validate' && option2 === 'stats' ||  option1 === 'stats' && option2 === 'validate') {
+        mdLinks(valueArgv)
         .then(links =>{
             /*let validationStast =*/ mdLinks.linkStast(links);
               console.log(chalk.green("resultado:"));
@@ -20,8 +23,8 @@ let valueArgv = process.argv[2]
           console.log(err)
         });
     }
-    if (process.argv[3] === 'stats'){
-      mdLinks(process.argv[2])
+    if (option1 === 'stats'){
+      mdLinks(valueArgv)
       .then ( links => {
         let linksResult = mdLinks.linkStast(links);
         console.log(linksResult);
@@ -33,8 +36,8 @@ let valueArgv = process.argv[2]
         console.log(err);
       })
     }
-    if ( process.argv[3] === 'validate'){
-      mdLinks(process.argv[2], {validate: true})
+    if ( option1 === 'validate'){
+      mdLinks(valueArgv, {validate: true})
       .then ((links)=>{
         console.log(links)
       })
@@ -43,7 +46,7 @@ let valueArgv = process.argv[2]
       })
     }
     else {
-      mdLinks(process.argv[2])
+      mdLinks(valueArgv)
       .then(links => {
         console.log(links)
       })
